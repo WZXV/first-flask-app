@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+    <div class="mt-5 container">
+        <form action="{{ url_for('registration')}}" method="POST">
+            {{ form.csrf_token }}
+
+              <div class="row mb-2">
+                <div class="col">
+                  <div class="form-outline">
+                    {{ form.username(class="form-control") }}
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-outline">
+                    {{ form.email(class="form-control") }}
+                      {% if form.username.errors %}
+                      {% for error in form.username.errors %}
+                        <div class="text-danger mt-2 mb-3">{{ error }}</div>
+                      {% endfor %}
+                      {% else %}
+                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                      {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email input -->
+              <div class="form-outline mb-3">
+                {{ form.password(class="form-control") }}
+                {% if form.password.errors %}
+                      {% for error in form.username.errors %}
+                        <div class="text-danger mt-2 mb-3">{{ error }}</div>
+                      {% endfor %}
+                {% endif %}
+              </div>
+
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                {{ form.confirm_password(class="form-control") }}
+                {% if form.confirm_password.errors %}
+                  {% for error in form.confirm_password.errors %}
+                    <div class="text-danger mt-2 mb-3">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+              <!-- Checkbox -->
+              <div class="form-check d-flex justify-content-center gap-2 mb-2">
+                  {{ form.remember_me(class="form-check-input") }}
+                  {{ form.remember_me.label(class="form-check-label pl-2") }}
+              </div>
+
+              <div class="form-check d-flex justify-content-center gap-2">
+                {{ form.submit(class="btn btn-primary") }}
+              </div>
+        </form>
+    </div>
+{% endblock %}

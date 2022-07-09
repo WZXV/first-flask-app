@@ -5,6 +5,7 @@
 }
 ul{
     list-style: none;
+    padding-left: 0px;
 }
 a{
     color: inherit;
@@ -17,12 +18,14 @@ a{
 .container{
     max-width: 1300px;
     margin: 0 auto;
+    flex-wrap: nowrap;
 }
 
 .nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 }
 
 .logo{
@@ -30,7 +33,10 @@ a{
     font-size: 40px}
 
 .header__list{
+    margin-bottom: 0px;
     display: flex;
+   align-items: center;
+    text-align: center;
     gap: 10px;
 
     color: white;
