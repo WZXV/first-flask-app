@@ -15,12 +15,18 @@
                 <li class="header__item">
                     <a href="{{ url_for('home') }}" class="header__link">Home</a>
                 </li>
-                <li class="header__item">
-                    <a href="{{ url_for('login') }}" class="header__link">Sign In</a>
-                </li>
-                <li class="header__item">
-                    <a href="{{ url_for('registration') }}" class="header__link">Sign Up</a>
-                </li>
+                {% if current_user.is_anonymous %}
+                    <li class="header__item">
+                        <a href="{{ url_for('login') }}" class="header__link">Sign In</a>
+                    </li>
+                    <li class="header__item">
+                        <a href="{{ url_for('registration') }}" class="header__link">Sign Up</a>
+                    </li>
+                {% else %}
+                    <li class="header__item">
+                        <a href="{{ url_for('logout') }}" class="header__link">Log out</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </header>

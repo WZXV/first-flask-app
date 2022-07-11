@@ -1,11 +1,11 @@
 import re
 
-from app import app, db
+from app import app, db, login_manager
 from app.forms import Registration, LogIn
 from app.models import User
 
 from flask import render_template, request, redirect, url_for, flash
-
+from flask_login import login_user, login_required, logout_user
 
 @app.route("/")
 def index():
@@ -13,6 +13,7 @@ def index():
 
 
 @app.route("/home")
+@login_required
 def home():
     return render_template("home.html")
 
@@ -44,23 +45,21 @@ def login():
     form = LogIn()
 
     if form.validate_on_submit():
-        regex = re.compile(r"\w+@\w+\.\w+")
-        if regex.search(form.email_or_username.data):
-            user = User.query.filter_by(email=form.email_or_username.data).first()
-            if user:
-                if user.check_password(password=form.password.data):
-                    flash("Nice")
-                    return render_template("/forms/signin.html", form=form)
-            else:
-                flash("that user is not exists")
-                return render_template("/forms/signin.html", form=form)
+        user = User.query.filter_by(username=form.email_or_username.data).first()
+
+        if user and user.check_password(form.password.data):
+
+            login_user(user, remember=form.remember_me.data)
+            return redirect(url_for("home"))
         else:
-            user = User.query.filter_by(username=form.email_or_username.data).first()
-            if user:
-                if user.check_password(password=form.password.data):
-                    flash("Nice")
-                    return render_template("/forms/signin.html", form=form)
-            else:
-                flash("that user is not exists")
-                return render_template("/forms/signin.html", form=form)
+            flash("Incorrect username or password", "alert alert-danger")
+            return redirect(url_for("login"))
+
+
     return render_template("/forms/signin.html", form=form)
+
+
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    logout_user()
+    return redirect(url_for('registration'))

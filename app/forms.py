@@ -8,11 +8,11 @@ class Registration(FlaskForm):
     email = EmailField("email", validators=[DataRequired(), Email()], render_kw={"placeholder": "email"})
     password = PasswordField("password", validators=[DataRequired(), Length(min=6)], render_kw={"placeholder": "password"})
     confirm_password = PasswordField('confirm password', validators=[DataRequired(), EqualTo('password')], render_kw={"placeholder": "confirm password"})
-    remember_me = BooleanField('Remember me')
     submit = SubmitField('Sign up')
 
 
 class LogIn(FlaskForm):
     email_or_username = StringField("email or username", validators=[DataRequired()], render_kw={"placeholder": "username or email"})
     password = PasswordField("password", validators=[DataRequired()], render_kw={"placeholder": "password"})
+    remember_me = BooleanField('Remember me')
     submit = SubmitField("Sign in")

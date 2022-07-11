@@ -19,6 +19,13 @@
             {% endfor %}
             </p>
             <p>
+                              <!-- Checkbox -->
+              <div class="form-check d-flex justify-content-center gap-2 mb-2">
+                  {{ form.remember_me(class="form-check-input") }}
+                  {{ form.remember_me.label(class="form-check-label pl-2") }}
+              </div>
+            </p>
+            <p>
                 {{ form.submit(class="btn btn-primary") }}
             </p>
         </form>
